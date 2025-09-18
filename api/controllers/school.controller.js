@@ -16,9 +16,9 @@ module.exports = {
         try {
             const form = new formidable.IncomingForm();
             form.parse(req, async (err, fields, files) => {
-                const school = await School.findOne({email:fields.email[0]});
-                if (School) {
-                    return res.status(409).json({Success:false,message:"Email is already registered."})
+                const existing = await School.findOne({ email: fields.email[0] });
+                if (existing) {
+                    return res.status(409).json({ success:false, message:"Email is already registered." });
                 }
                 else{
 
