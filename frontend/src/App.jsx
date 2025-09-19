@@ -29,6 +29,9 @@ import AttendanceStudent from "./student/components/attendance/AttendanceStudent
 import NoticeStudent from "./student/components/notice/NoticeStudent";
 import ExaminationsStudent from "./student/components/examinations/ExaminationsStudent";
 
+// css
+// import './assets/css/style.css';
+// import './assets/css/responsive.css';
 
 function App() {
 
