@@ -6,6 +6,8 @@ const cookieParser = require('cookie-parser');
 
 // ROUTER IMPORT
 const schoolRouter = require("./routers/school.router")
+// const teacherRouter = require("./routers/teacher.router");
+// const studentRouter = require("./routers/student.router");
 
 const app = express();
 app.use(express.json());
@@ -22,7 +24,9 @@ mongoose.connect('mongodb://localhost:27017/studyzen2025').then(db=>{
 
 
 //ROUTER
-app.use("/api/school", schoolRouter)
+app.use("/api/school", schoolRouter);
+// app.use("/api/teacher", teacherRouter);
+// app.use("/api/student", studentRouter);
 const PORT = process.env.PORT;
 app.listen(PORT,()=>{
     console.log("Server is running at PORT=>",PORT)

@@ -7,9 +7,9 @@ export default function Client() {
   return (
     <>
       <Navbar />
-      <Box sx={{ minHeight: '80vh' }} component="div">
+      {/* <Box sx={{ minHeight: '80vh' }} component="div"> */}
         <Outlet />
-      </Box>
+      {/* </Box> */}
       <Footer />
     </>
   );

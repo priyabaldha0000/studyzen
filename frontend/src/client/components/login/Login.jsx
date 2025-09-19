@@ -1,54 +1,30 @@
-import * as React from 'react';
-import Box from '@mui/material/Box';
-import TextField from '@mui/material/TextField';
-import { useFormik } from 'formik';
-import Button from '@mui/material/Button';
-import { Typography } from "@mui/material";
+import * as React from "react";
+import { useFormik } from "formik";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import MessageSnackbar from "../../../basic utility components/snackbar/MessageSnackbar";
-
-// (optional) you can create a yupSchema/loginSchema.js like registerSchema
-// For now, I'll keep validation minimal
 
 export default function Login() {
   const navigate = useNavigate();
 
-  const initialValues = {
-    email: "",
-    password: ""
-  };
-
-  const [message, setMessage] = React.useState('');
-  const [messageType, setMessageType] = React.useState('success');
-  const handleMessageClose = () => {
-    setMessage('');
-  };
+  const [message, setMessage] = React.useState("");
+  const [messageType, setMessageType] = React.useState("success");
+  const handleMessageClose = () => setMessage("");
 
   const Formik = useFormik({
-    initialValues,
+    initialValues: { email: "", password: "" },
     onSubmit: async (values) => {
       try {
         const resp = await axios.post("http://localhost:5000/api/school/login", values);
-
         if (resp.data.success) {
           setMessage(resp.data.message);
           setMessageType("success");
-
-          // Save token + user info to localStorage
           localStorage.setItem("token", resp.data.user.token);
           localStorage.setItem("user", JSON.stringify(resp.data.user));
-
-          // Redirect after short delay
-          setTimeout(() => {
-            navigate("/");
-          }, 1000);
+          setTimeout(() => navigate("/"), 1000);
         }
       } catch (error) {
-        console.error("Login error:", error);
-        setMessage(
-          error.response?.data?.message || "Login failed. Please try again."
-        );
+        setMessage(error.response?.data?.message || "Login failed. Please try again.");
         setMessageType("error");
       }
     },
@@ -56,55 +32,88 @@ export default function Login() {
 
   return (
     <>
-      {message &&
+
+      {message && (
         <MessageSnackbar
           message={message}
           type={messageType}
           handleClose={handleMessageClose}
         />
-      }
+      )}
 
-      <Box
-        component="form"
-        sx={{
-          "& > :not(style)": { m: 1 },
-          display: "flex",
-          flexDirection: "column",
-          width: "60vw",
-          minWidth: "230px",
-          margin: "auto"
-        }}
-        noValidate
-        autoComplete="off"
-        onSubmit={Formik.handleSubmit}
+      <section
+        className="contact-page-area section-gap"
+        style={{ paddingTop: "120px", minHeight: "100vh" }}
       >
-        <Typography variant="h5" align="center">Login</Typography>
+        <div className="container">
+          <div className="row">
+            <div className="col-lg-8 offset-lg-2">
+              <form
+                className="form-area contact-form" //text-right p-4 shadow bg-white
+                style={{ borderRadius: "8px" }}
+                onSubmit={Formik.handleSubmit}
+                noValidate
+              >
+                <h2 className="mb-4 text-center">Login to StudyZen</h2>
 
-        <TextField
-          name="email"
-          label="Email"
-          value={Formik.values.email}
-          onChange={Formik.handleChange}
-          onBlur={Formik.handleBlur}
-        />
-        {Formik.touched.email && Formik.errors.email && (
-          <p style={{ color: "red" }}>{Formik.errors.email}</p>
-        )}
+                {/* Email */}
+                <div className="form-group">
+                  <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    value={Formik.values.email}
+                    onChange={Formik.handleChange}
+                    onBlur={Formik.handleBlur}
+                    placeholder="Enter your email"
+                    className={`common-input mb-20 form-control ${
+                      Formik.touched.email && Formik.errors.email ? "is-invalid" : ""
+                    }`}
+                    required
+                  />
+                  {Formik.touched.email && Formik.errors.email && (
+                    <div className="invalid-feedback">{Formik.errors.email}</div>
+                  )}
+                </div>
 
-        <TextField
-          type="password"
-          name="password"
-          label="Password"
-          value={Formik.values.password}
-          onChange={Formik.handleChange}
-          onBlur={Formik.handleBlur}
-        />
-        {Formik.touched.password && Formik.errors.password && (
-          <p style={{ color: "red" }}>{Formik.errors.password}</p>
-        )}
+                {/* Password */}
+                <div className="form-group">
+                  <input
+                    type="password"
+                    id="password"
+                    name="password"
+                    value={Formik.values.password}
+                    onChange={Formik.handleChange}
+                    onBlur={Formik.handleBlur}
+                    placeholder="Enter your password"
+                    className={`common-input mb-20 form-control ${
+                      Formik.touched.password && Formik.errors.password
+                        ? "is-invalid"
+                        : ""
+                    }`}
+                    required
+                  />
+                  {Formik.touched.password && Formik.errors.password && (
+                    <div className="invalid-feedback">{Formik.errors.password}</div>
+                  )}
+                </div>
 
-        <Button type="submit" variant="contained">Login</Button>
-      </Box>
+                <button className="btn primary-btn" style={{ float: "right" }} type="submit">
+                  Login
+                </button>
+
+                <p className="mt-3 text-center">
+                  Don’t have an account?{" "}
+                  <Link to="/register" className="text-primary">
+                    Register here
+                  </Link>
+                </p>
+              </form>
+            </div>
+          </div>
+        </div>
+      </section>
+
     </>
   );
 }

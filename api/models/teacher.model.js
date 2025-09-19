@@ -9,6 +9,7 @@ const teacherSchema = new mongoose.Schema({
   gender: { type: String, required: true },
   teacher_image: { type: String, required: true },
   password: { type: String, required: true },
+  // role: { type: String, enum: ['TEACHER'], default: 'TEACHER' },
   createdAt: { type: Date, default: new Date() }
 });
 

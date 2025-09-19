@@ -6,6 +6,11 @@ const schoolSchema = new mongoose.Schema({
   owner_name: { type: String, required: true },
   school_image: { type: String, required: true },
   password: { type: String, required: true },
+  // role: {
+  //   type: String,
+  //   enum: ['SCHOOL', 'ADMIN'], // keep ADMIN here if you later need a separate admin
+  //   default: 'SCHOOL'
+  // },
   createdAt: { type: Date, default: new Date() }
 });
 
