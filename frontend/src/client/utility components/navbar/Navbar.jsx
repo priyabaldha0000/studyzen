@@ -5,6 +5,8 @@ const pages = [
   { link: "/", component: "Home" },
   { link: "/login", component: "Login" },
   { link: "/register", component: "Register" },
+  { link: "/student", component: "Student " },   // ✅ Added
+  { link: "/teacher", component: "Teacher " },   // ✅ Added
 ];
 
 export default function Navbar() {
@@ -60,49 +62,6 @@ export default function Navbar() {
                   </button>
                 </li>
               ))}
-
-              {/* Example of extra nav items from template */}
-              {/* <li className="nav-item">
-                <Link to="/students" className="nav-link">
-                  Students
-                </Link>
-              </li>
-              <li className="nav-item">
-                <Link to="/attendance" className="nav-link">
-                  Attendance
-                </Link>
-              </li>
-              <li className="nav-item">
-                <Link to="/course" className="nav-link">
-                  Course
-                </Link>
-              </li> */}
-
-              {/* {user ? (
-                <>
-                  <li className="nav-item">
-                    <span className="nav-link">Welcome, {user.email}</span>
-                  </li>
-                  <li className="nav-item">
-                    <button onClick={handleLogout} className="btn btn-link nav-link">
-                      Logout
-                    </button>
-                  </li>
-                </>
-              ) : (
-                <>
-                  <li className="nav-item">
-                    <Link to="/login" className="nav-link">
-                      Login
-                    </Link>
-                  </li>
-                  <li className="nav-item">
-                    <Link to="/register" className="nav-link">
-                      Register
-                    </Link>
-                  </li>
-                </>
-              )} */}
             </ul>
           </div>
         </div>

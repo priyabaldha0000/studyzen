@@ -64,42 +64,65 @@ module.exports = {
         }
     },
     loginSchool: async (req, res) => {
-        try {
-            const school = await School.findOne({ email: req.body.email });
-            if (school) {
-                const isAuth = bcrypt.compareSync(req.body.password, school.password);
-                if (isAuth) {
-                    const jwtSecret = process.env.JWT_SECRET;
-                    const token = jwt.sign({
+    try {
+        // === Admin login check ===
+        if(req.body.email === "admin123@gmail.com" && req.body.password === "admin") {
+            const jwtSecret = process.env.JWT_SECRET;
+            const token = jwt.sign({
+                id: "admin123", // arbitrary ID for admin
+                email: "admin123@gmail.com",
+                role: "ADMIN"
+            }, jwtSecret);
+            return res.status(200).json({
+                success: true,
+                message: "Admin Login Success.",
+                user: {
+                    id: "admin123",
+                    email: "admin123@gmail.com",
+                    role: "ADMIN",
+                    token: token,
+                    redirect: "/" // redirect to home page
+                }
+            });
+        }
+
+        // === Existing School login code ===
+        const school = await School.findOne({ email: req.body.email });
+        if (school) {
+            const isAuth = bcrypt.compareSync(req.body.password, school.password);
+            if (isAuth) {
+                const jwtSecret = process.env.JWT_SECRET;
+                const token = jwt.sign({
+                    id: school._id,
+                    schoolId: school._id,
+                    owner_name: school.owner_name,
+                    school_name: school.school_name,
+                    image_url: school.school_image,
+                    role: "SCHOOL"
+                }, jwtSecret);
+                res.header("Authorization", token)
+                res.status(200).json({
+                    success: true, message: "Success Login.",
+                    user: {
                         id: school._id,
-                        schoolId: school._id,
                         owner_name: school.owner_name,
                         school_name: school.school_name,
                         image_url: school.school_image,
-                        role: "SCHOOL"
-                    }, jwtSecret);
-                    res.header("Authorization", token)
-                    res.status(200).json({
-                        success: true, message: "Success Login.",
-                        user: {
-                            id: school._id,
-                            owner_name: school.owner_name,
-                            school_name: school.school_name,
-                            image_url: school.school_image,
-                            role: "SCHOOL",
-                            token: token
-                        }
-                    });
-                } else {
-                    res.status(401).json({ success: false, message: "Password is Incorrect." })
-                }
+                        role: "SCHOOL",
+                        token: token
+                    }
+                });
             } else {
-                res.status(401).json({ success: false, message: "Email is not registered." })
+                res.status(401).json({ success: false, message: "Password is Incorrect." })
             }
-        } catch (error) {
-            res.status(500).json({ success: false, message: "Internal Server Error[SCHOOL LOGIN]." })
+        } else {
+            res.status(401).json({ success: false, message: "Email is not registered." })
         }
-    },
+    } catch (error) {
+        res.status(500).json({ success: false, message: "Internal Server Error[SCHOOL LOGIN]." })
+    }
+},
+
 
     getAllSchools: async (req, res) => {
         try {
