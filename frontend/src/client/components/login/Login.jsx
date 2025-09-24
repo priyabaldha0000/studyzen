@@ -21,7 +21,7 @@ export default function Login() {
           setMessageType("success");
           localStorage.setItem("token", resp.data.user.token);
           localStorage.setItem("user", JSON.stringify(resp.data.user));
-          setTimeout(() => navigate("/"), 1000);
+          setTimeout(() => navigate(resp.data.user.redirect || "/"), 1000);
         }
       } catch (error) {
         setMessage(error.response?.data?.message || "Login failed. Please try again.");

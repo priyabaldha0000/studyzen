@@ -1,24 +1,45 @@
-import React from "react";
-
+import React, { useEffect } from "react";
+import feather from "feather-icons";
 
 const Navbar = () => {
+  useEffect(() => {
+    feather.replace(); // initialize feather icons
+  }, []);
+
+  const handleLogout = () => {
+  localStorage.removeItem("token");   // clear JWT
+  window.location.href = "/";         // redirect to homepage
+};
+
+
   return (
-    <nav className="navbar navbar-expand-lg main-navbar sticky">
-      {/* Left section */}
-      <div className="form-inline mr-auto">
+    <nav
+      className="navbar navbar-expand-lg main-navbar sticky"
+      style={{ background: "#fff", boxShadow: "0 2px 4px rgba(0,0,0,0.1)" }}
+    >
+      {/* Left section: Logo */}
+      <div className="navbar-brand d-flex align-items-center">
+        
+        
+      </div>
+
+      {/* Left section buttons */}
+      <div className="form-inline mr-auto ml-3">
         <ul className="navbar-nav mr-3">
           <li>
             <button
-              className="nav-link nav-link-lg collapse-btn btn btn-link"
+              className="nav-link nav-link-lg btn btn-link"
               onClick={() => console.log("Toggle sidebar")}
+              style={{ color: "#34395e" }}
             >
               <i data-feather="align-justify" />
             </button>
           </li>
           <li>
             <button
-              className="nav-link nav-link-lg fullscreen-btn btn btn-link"
+              className="nav-link nav-link-lg btn btn-link"
               onClick={() => console.log("Fullscreen toggle")}
+              style={{ color: "#34395e" }}
             >
               <i data-feather="maximize" />
             </button>
@@ -31,15 +52,15 @@ const Navbar = () => {
                 console.log("Search submitted");
               }}
             >
-              <div className="search-element">
+              <div className="search-element" style={{ display: "flex" }}>
                 <input
                   className="form-control"
                   type="search"
                   placeholder="Search"
                   aria-label="Search"
-                  style={{ width: "200px" }}
+                  style={{ width: "200px", border: "1px solid #ddd" }}
                 />
-                <button className="btn" type="submit">
+                <button className="btn" type="submit" style={{ color: "#34395e" }}>
                   <i className="fas fa-search" />
                 </button>
               </div>
@@ -49,118 +70,66 @@ const Navbar = () => {
       </div>
 
       {/* Right section */}
-      <ul className="navbar-nav navbar-right">
+      <ul className="navbar-nav navbar-right align-items-center">
         {/* Messages */}
-        <li className="dropdown dropdown-list-toggle">
+        <li className="nav-item mr-3">
           <button
-            className="nav-link nav-link-lg message-toggle btn btn-link"
-            data-toggle="dropdown"
+            className="nav-link nav-link-lg btn btn-link"
+            style={{ color: "#34395e", position: "relative" }}
+            onClick={() => console.log("Messages clicked")}
           >
             <i data-feather="mail" />
-            <span className="badge headerBadge1">6</span>
+            <span
+              className="badge headerBadge1"
+              style={{
+                background: "#6777ef",
+                color: "#fff",
+                borderRadius: "50%",
+                fontSize: "12px",
+                padding: "2px 6px",
+                position: "absolute",
+                top: "0",
+                right: "0",
+              }}
+            >
+              6
+            </span>
           </button>
-          <div className="dropdown-menu dropdown-list dropdown-menu-right pullDown">
-            <div className="dropdown-header">
-              Messages
-              <div className="float-right">
-                <a href="#">Mark All As Read</a>
-              </div>
-            </div>
-
-            <div className="dropdown-list-content dropdown-list-message">
-              {/* Example message */}
-              <a href="#" className="dropdown-item">
-                <span className="dropdown-item-avatar text-white">
-                  <img
-                    alt="John Deo"
-                    src="assets/img/users/user-1.png"
-                    className="rounded-circle"
-                  />
-                </span>
-                <span className="dropdown-item-desc">
-                  <span className="message-user">John Deo</span>
-                  <span className="time messege-text">
-                    Please check your mail !!
-                  </span>
-                  <span className="time">2 Min Ago</span>
-                </span>
-              </a>
-
-              {/* Repeat other message items as needed */}
-            </div>
-
-            <div className="dropdown-footer text-center">
-              <a href="#">
-                View All <i className="fas fa-chevron-right" />
-              </a>
-            </div>
-          </div>
         </li>
 
         {/* Notifications */}
-        <li className="dropdown dropdown-list-toggle">
+        <li className="nav-item mr-3">
           <button
-            className="nav-link notification-toggle nav-link-lg btn btn-link"
-            data-toggle="dropdown"
+            className="nav-link nav-link-lg btn btn-link"
+            style={{ color: "#34395e" }}
+            onClick={() => console.log("Notifications clicked")}
           >
-            <i data-feather="bell" className="bell" />
+            <i data-feather="bell" />
           </button>
-          <div className="dropdown-menu dropdown-list dropdown-menu-right pullDown">
-            <div className="dropdown-header">
-              Notifications
-              <div className="float-right">
-                <a href="#">Mark All As Read</a>
-              </div>
-            </div>
-            <div className="dropdown-list-content dropdown-list-icons">
-              <a href="#" className="dropdown-item dropdown-item-unread">
-                <span className="dropdown-item-icon bg-primary text-white">
-                  <i className="fas fa-code" />
-                </span>
-                <span className="dropdown-item-desc">
-                  Template update is available now!
-                  <span className="time">2 Min Ago</span>
-                </span>
-              </a>
-              {/* Add other notifications similarly */}
-            </div>
-            <div className="dropdown-footer text-center">
-              <a href="#">
-                View All <i className="fas fa-chevron-right" />
-              </a>
-            </div>
-          </div>
         </li>
 
         {/* User profile */}
-        <li className="dropdown">
+        <li className="nav-item dropdown">
           <button
-            className="nav-link dropdown-toggle nav-link-lg nav-link-user btn btn-link"
-            data-toggle="dropdown"
+            className="btn btn-link d-flex align-items-center"
+            style={{ color: "#34395e" }}
+            onClick={() => console.log("Profile clicked")}
           >
             <img
               alt="User"
-              src="assets/img/user.png"
+              src="/assets/img/user.png"
               className="user-img-radious-style"
+              style={{ width: "35px", height: "35px", borderRadius: "50%" }}
             />
-            <span className="d-sm-none d-lg-inline-block"></span>
+            <span className="ml-2 d-sm-none d-lg-inline-block">Hi, Admin</span>
           </button>
-          <div className="dropdown-menu dropdown-menu-right pullDown">
-            <div className="dropdown-title">Hello Sarah Smith</div>
-            <a href="profile.html" className="dropdown-item has-icon">
-              <i className="far fa-user" /> Profile
-            </a>
-            <a href="timeline.html" className="dropdown-item has-icon">
-              <i className="fas fa-bolt" /> Activities
-            </a>
-            <a href="#" className="dropdown-item has-icon">
-              <i className="fas fa-cog" /> Settings
-            </a>
-            <div className="dropdown-divider"></div>
-            <a href="auth-login.html" className="dropdown-item has-icon text-danger">
-              <i className="fas fa-sign-out-alt" /> Logout
-            </a>
-          </div>
+        </li>
+
+        {/* Logout button */}
+        <li className="nav-item ml-3">
+            <button onClick={handleLogout} className="btn btn-danger ml-2">
+            <i className="fas fa-sign-out-alt mr-1"></i> Logout
+          </button>
         </li>
       </ul>
     </nav>

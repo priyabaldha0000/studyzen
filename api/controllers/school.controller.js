@@ -81,7 +81,7 @@ module.exports = {
                     email: "admin123@gmail.com",
                     role: "ADMIN",
                     token: token,
-                    redirect: "/" // redirect to home page
+                    redirect: "/school" // redirect to home page
                 }
             });
         }

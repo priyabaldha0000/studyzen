@@ -1,6 +1,6 @@
 import * as React from "react";
 import { useFormik } from "formik";
-import { registerSchema } from "../../../yupSchema/registerSchema";
+// import { registerSchema } from "../../../yupSchema/registerSchema";
 import axios from "axios";
 import MessageSnackbar from "../../../basic utility components/snackbar/MessageSnackbar";
 
@@ -34,7 +34,7 @@ export default function Register() {
       password: "",
       confirm_password: "",
     },
-    validationSchema: registerSchema,
+    // validationSchema: registerSchema,
     onSubmit: async (values, { resetForm }) => {
       try {
         const fd = new FormData();
@@ -81,11 +81,11 @@ export default function Register() {
                 onSubmit={Formik.handleSubmit}
                 noValidate
               >
-                <h2 className="mb-4 text-center">Register Your School</h2>
+                <h2 className="mb-4 text-center">Register</h2>
 
                 {/* Image upload */}
                 <div className="form-group text-left mb-3">
-                  <label className="mb-2">Add School Picture</label>
+                  <label className="mb-2">Add Picture</label>
                   <input
                     type="file"
                     ref={fileInputRef}
@@ -108,7 +108,7 @@ export default function Register() {
                   <input
                     type="text"
                     name="school_name"
-                    placeholder="School Name"
+                    placeholder="Name"
                     className={`common-input mb-20 form-control ${
                       Formik.touched.school_name && Formik.errors.school_name
                         ? "is-invalid"
@@ -148,7 +148,7 @@ export default function Register() {
                   <input
                     type="text"
                     name="owner_name"
-                    placeholder="Owner Name"
+                    placeholder="Div"
                     className={`common-input mb-20 form-control ${
                       Formik.touched.owner_name && Formik.errors.owner_name
                         ? "is-invalid"

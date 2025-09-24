@@ -5,8 +5,8 @@ const pages = [
   { link: "/", component: "Home" },
   { link: "/login", component: "Login" },
   { link: "/register", component: "Register" },
-  { link: "/student", component: "Student " },   // ✅ Added
-  { link: "/teacher", component: "Teacher " },   // ✅ Added
+  // { link: "/student", component: "Student " },   // ✅ Added
+  // { link: "/teacher", component: "Teacher " },   // ✅ Added
 ];
 
 export default function Navbar() {
