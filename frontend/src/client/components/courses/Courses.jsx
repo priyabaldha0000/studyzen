@@ -1,24 +1,28 @@
 import React from "react";
-import { Link } from "react-router-dom"; // For navigation
+// Assuming you'll create a Courses.css for specific styles for this page
+// import "./Courses.css";
+// If you use react-router-dom for navigation, make sure to import Link
+import { Link } from "react-router-dom";
 
-export default function Home() {
+export default function Courses() {
   return (
     <div>
       {/* ================ Start Banner Area ================= */}
-      <section className="home-banner-area">
+      <section className="banner-area">
         <div className="container">
-          <div className="row justify-content-center fullscreen align-items-center">
-            <div className="col-lg-5 col-md-8 home-banner-left">
-              <h1 className="text-white">
-                StudyZen <br />
-                Learn Smarter
-              </h1>
+          <div className="row justify-content-center align-items-center">
+            <div className="col-lg-12 banner-right">
+              <h1 className="text-white">Our Courses</h1>
               <p className="mx-auto text-white mt-20 mb-40">
-                Your go-to platform for students to learn, grow, and achieve academic success in 2025.
+                Explore a wide range of courses designed to boost your skills and career.
               </p>
-            </div>
-            <div className="offset-lg-2 col-lg-5 col-md-12 home-banner-right">
-              <img className="img-fluid" src="img/header-img.png" alt="Student studying with StudyZen" />
+              <div className="link-nav">
+                <span className="box">
+                  <Link to="/">Home </Link>
+                  <i className="lnr lnr-arrow-right"></i>
+                  <Link to="/courses">Courses</Link>
+                </span>
+              </div>
             </div>
           </div>
         </div>
@@ -74,110 +78,150 @@ export default function Home() {
             <div className="col-lg-12">
               <h2>
                 Popular Courses <br />
-                for Students in 2025
+                Available Right Now
               </h2>
               <p>
-                Top courses designed to help students excel this academic year.
+                Browse through our most sought-after courses designed to give you an edge.
               </p>
             </div>
           </div>
           <div className="owl-carousel popuar-course-carusel">
             <div className="single-popular-course">
               <div className="thumb">
-                <img className="f-img img-fluid mx-auto" src="img/popular-course/p1.jpg" alt="Math Course" />
+                <img className="f-img img-fluid mx-auto" src="img/popular-course/p1.jpg" alt="Course Thumbnail 1" />
               </div>
               <div className="details">
                 <div className="d-flex justify-content-between mb-20">
-                  <p className="name">Mathematics</p>
-                  <p className="value">$75</p>
+                  <p className="name">programming language</p>
+                  <p className="value">$150</p>
                 </div>
                 <a href="#">
-                  <h4>Algebra Essentials: Grasping Key Concepts for Success</h4>
+                  <h4>Learn Angular JS Course for Legendary Persons</h4>
                 </a>
                 <div className="bottom d-flex mt-15">
                   <ul className="list">
-                    <li><i className="fa fa-star"></i></li>
-                    <li><i className="fa fa-star"></i></li>
-                    <li><i className="fa fa-star"></i></li>
-                    <li><i className="fa fa-star"></i></li>
-                    <li><i className="fa fa-star-half-o"></i></li>
+                    <li>
+                      <i className="fa fa-star"></i>
+                    </li>
+                    <li>
+                      <i className="fa fa-star"></i>
+                    </li>
+                    <li>
+                      <i className="fa fa-star"></i>
+                    </li>
+                    <li>
+                      <i className="fa fa-star"></i>
+                    </li>
+                    <li>
+                      <i className="fa fa-star"></i>
+                    </li>
                   </ul>
-                  <p className="ml-20">40 Reviews</p>
+                  <p className="ml-20">25 Reviews</p>
                 </div>
               </div>
             </div>
 
             <div className="single-popular-course">
               <div className="thumb">
-                <img className="f-img img-fluid mx-auto" src="img/popular-course/p2.jpg" alt="Science Course" />
+                <img className="f-img img-fluid mx-auto" src="img/popular-course/p2.jpg" alt="Course Thumbnail 2" />
               </div>
               <div className="details">
                 <div className="d-flex justify-content-between mb-20">
-                  <p className="name">Science</p>
-                  <p className="value">$85</p>
+                  <p className="name">programming language</p>
+                  <p className="value">$150</p>
                 </div>
                 <a href="#">
-                  <h4>Biology Deep Dive: Understanding Life's Fundamentals</h4>
+                  <h4>Learn Angular JS Course for Legendary Persons</h4>
                 </a>
                 <div className="bottom d-flex mt-15">
                   <ul className="list">
-                    <li><i className="fa fa-star"></i></li>
-                    <li><i className="fa fa-star"></i></li>
-                    <li><i className="fa fa-star"></i></li>
-                    <li><i className="fa fa-star"></i></li>
-                    <li><i className="fa fa-star"></i></li>
+                    <li>
+                      <i className="fa fa-star"></i>
+                    </li>
+                    <li>
+                      <i className="fa fa-star"></i>
+                    </li>
+                    <li>
+                      <i className="fa fa-star"></i>
+                    </li>
+                    <li>
+                      <i className="fa fa-star"></i>
+                    </li>
+                    <li>
+                      <i className="fa fa-star"></i>
+                    </li>
                   </ul>
-                  <p className="ml-20">55 Reviews</p>
+                  <p className="ml-20">25 Reviews</p>
                 </div>
               </div>
             </div>
 
             <div className="single-popular-course">
               <div className="thumb">
-                <img className="f-img img-fluid mx-auto" src="img/popular-course/p3.jpg" alt="History Course" />
+                <img className="f-img img-fluid mx-auto" src="img/popular-course/p3.jpg" alt="Course Thumbnail 3" />
               </div>
               <div className="details">
                 <div className="d-flex justify-content-between mb-20">
-                  <p className="name">History</p>
-                  <p className="value">$60</p>
+                  <p className="name">programming language</p>
+                  <p className="value">$150</p>
                 </div>
                 <a href="#">
-                  <h4>World History: Key Events & Global Impact</h4>
+                  <h4>Learn Angular JS Course for Legendary Persons</h4>
                 </a>
                 <div className="bottom d-flex mt-15">
                   <ul className="list">
-                    <li><i className="fa fa-star"></i></li>
-                    <li><i className="fa fa-star"></i></li>
-                    <li><i className="fa fa-star"></i></li>
-                    <li><i className="fa fa-star-o"></i></li>
-                    <li><i className="fa fa-star-o"></i></li>
+                    <li>
+                      <i className="fa fa-star"></i>
+                    </li>
+                    <li>
+                      <i className="fa fa-star"></i>
+                    </li>
+                    <li>
+                      <i className="fa fa-star"></i>
+                    </li>
+                    <li>
+                      <i className="fa fa-star"></i>
+                    </li>
+                    <li>
+                      <i className="fa fa-star"></i>
+                    </li>
                   </ul>
-                  <p className="ml-20">28 Reviews</p>
+                  <p className="ml-20">25 Reviews</p>
                 </div>
               </div>
             </div>
 
             <div className="single-popular-course">
               <div className="thumb">
-                <img className="f-img img-fluid mx-auto" src="img/popular-course/p4.jpg" alt="English Course" />
+                <img className="f-img img-fluid mx-auto" src="img/popular-course/p4.jpg" alt="Course Thumbnail 4" />
               </div>
               <div className="details">
                 <div className="d-flex justify-content-between mb-20">
-                  <p className="name">English</p>
-                  <p className="value">$70</p>
+                  <p className="name">programming language</p>
+                  <p className="value">$150</p>
                 </div>
                 <a href="#">
-                  <h4>Creative Writing: Crafting Compelling Stories</h4>
+                  <h4>Learn Angular JS Course for Legendary Persons</h4>
                 </a>
                 <div className="bottom d-flex mt-15">
                   <ul className="list">
-                    <li><i className="fa fa-star"></i></li>
-                    <li><i className="fa fa-star"></i></li>
-                    <li><i className="fa fa-star"></i></li>
-                    <li><i className="fa fa-star"></i></li>
-                    <li><i className="fa fa-star-half-o"></i></li>
+                    <li>
+                      <i className="fa fa-star"></i>
+                    </li>
+                    <li>
+                      <i className="fa fa-star"></i>
+                    </li>
+                    <li>
+                      <i className="fa fa-star"></i>
+                    </li>
+                    <li>
+                      <i className="fa fa-star"></i>
+                    </li>
+                    <li>
+                      <i className="fa fa-star"></i>
+                    </li>
                   </ul>
-                  <p className="ml-20">33 Reviews</p>
+                  <p className="ml-20">25 Reviews</p>
                 </div>
               </div>
             </div>
@@ -193,11 +237,11 @@ export default function Home() {
             <div className="col-lg-5">
               <div className="section-title text-white">
                 <h2 className="text-white">
-                  Meet Our Tutors <br />
-                  Learn from the Best
+                  Watch Our Trainers <br />
+                  in Live Action
                 </h2>
                 <p>
-                  Our expert tutors make learning engaging and fun for every student.
+                  Get a glimpse of our expert trainers in action, delivering engaging and effective lessons.
                 </p>
               </div>
             </div>
@@ -205,29 +249,29 @@ export default function Home() {
               <div className="owl-carousel video-carousel">
                 <div className="single-video">
                   <div className="video-part">
-                    <img className="img-fluid" src="img/video-img.jpg" alt="Tutor introducing concepts" />
+                    <img className="img-fluid" src="img/video-img.jpg" alt="Trainer Video Thumbnail" />
                     <div className="overlay"></div>
                     <a className="popup-youtube play-btn" href="https://www.youtube.com/watch?v=VufDd-QL1c0">
                       <img className="play-icon" src="img/play-btn.png" alt="Play Button" />
                     </a>
                   </div>
-                  <h4 className="text-white mb-20 mt-30">How to Master Math: A Quick Guide - 2025</h4>
+                  <h4 className="text-white mb-20 mt-30">Learn Angular JS Course for Legendary Persons</h4>
                   <p className="text-white mb-20">
-                    See our math tutor break down tough problems step-by-step.
+                    Experience dynamic teaching and engaging content from our top instructors.
                   </p>
                 </div>
 
                 <div className="single-video">
                   <div className="video-part">
-                    <img className="img-fluid" src="img/video-img.jpg" alt="Tutor explaining science" />
+                    <img className="img-fluid" src="img/video-img.jpg" alt="Trainer Video Thumbnail" />
                     <div className="overlay"></div>
                     <a className="popup-youtube play-btn" href="https://www.youtube.com/watch?v=VufDd-QL1c0">
                       <img className="play-icon" src="img/play-btn.png" alt="Play Button" />
                     </a>
                   </div>
-                  <h4 className="text-white mb-20 mt-30">Science Explained: Fun & Easy Lessons - 2025</h4>
+                  <h4 className="text-white mb-20 mt-30">Learn Angular JS Course for Legendary Persons</h4>
                   <p className="text-white mb-20">
-                    An exciting demo from our science expert.
+                    See firsthand how our courses bring complex topics to life.
                   </p>
                 </div>
               </div>
@@ -237,91 +281,6 @@ export default function Home() {
       </section>
       {/* ================ End Video Area ================= */}
 
-      {/* ================ Start Feature Area ================= */}
-      <section className="other-feature-area">
-        <div className="container">
-          <div className="feature-inner row">
-            <div className="col-lg-12">
-              <div className="section-title text-left">
-                <h2>
-                  Student Features <br />
-                  You'll Love
-                </h2>
-                <p>
-                  Tools and benefits designed to make your study life easier.
-                </p>
-              </div>
-            </div>
-            <div className="col-lg-4 col-md-6">
-              <div className="other-feature-item">
-                <i className="ti-key"></i>
-                <h4>Always Available</h4>
-                <div>
-                  <p>
-                    Access all your courses anytime, forever.
-                  </p>
-                </div>
-              </div>
-            </div>
-            <div className="col-lg-4 col-md-6 mt--160">
-              <div className="other-feature-item">
-                <i className="ti-files"></i>
-                <h4>Study Files</h4>
-                <div>
-                  <p>
-                    Download notes and practice sheets.
-                  </p>
-                </div>
-              </div>
-            </div>
-            <div className="col-lg-4 col-md-6 mt--260">
-              <div className="other-feature-item">
-                <i className="ti-medall-alt"></i>
-                <h4>Student Perks</h4>
-                <div>
-                  <p>
-                    Join our student club for special offers.
-                  </p>
-                </div>
-              </div>
-            </div>
-            <div className="col-lg-4 col-md-6">
-              <div className="other-feature-item">
-                <i className="ti-briefcase"></i>
-                <h4>Many Courses</h4>
-                <div>
-                  <p>
-                    Over 35,000+ courses for all subjects.
-                  </p>
-                </div>
-              </div>
-            </div>
-            <div className="col-lg-4 col-md-6 mt--160">
-              <div className="other-feature-item">
-                <i className="ti-crown"></i>
-                <h4>Expert Help</h4>
-                <div>
-                  <p>
-                    Get guidance from top educators.
-                  </p>
-                </div>
-              </div>
-            </div>
-            <div className="col-lg-4 col-md-6 mt--260">
-              <div className="other-feature-item">
-                <i className="ti-headphone-alt"></i>
-                <h4>Live Support</h4>
-                <div>
-                  <p>
-                    Quick answers to your questions, 24/7.
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-      {/* ================ End Feature Area ================= */}
 
       {/* ================ Start Testimonials Area ================= */}
       <section className="testimonials-area section-gap">
@@ -334,17 +293,17 @@ export default function Home() {
                     <img src="img/quote.png" alt="Quote" />
                     <div className="mt-40 text">
                       <p>
-                        "StudyZen made my exams so much easier in 2025! The lessons were clear and engaging."
+                        "I learned so much and gained new skills. This platform is amazing for online education."
                       </p>
                     </div>
-                    <h4>Priya S.</h4>
-                    <p>High School Student</p>
+                    <h4>Emily R.</h4>
+                    <p>Web Developer Student</p>
                   </div>
                 </div>
               </div>
 
               <div className="offset-lg-1 col-lg-6">
-                <img src="img/testimonial/t1.jpg" alt="Student testimonial" />
+                <img src="img/testimonial/t1.jpg" alt="Testimonial Person" />
               </div>
             </div>
 
@@ -355,17 +314,17 @@ export default function Home() {
                     <img src="img/quote.png" alt="Quote" />
                     <div className="mt-40 text">
                       <p>
-                        "I finally understand complex topics thanks to StudyZen's tutors. A great help for my studies."
+                        "The courses are well-structured and easy to follow. I highly recommend it to everyone."
                       </p>
                     </div>
-                    <h4>Rahul D.</h4>
-                    <p>College Student</p>
+                    <h4>David L.</h4>
+                    <p>Graphic Design Enthusiast</p>
                   </div>
                 </div>
               </div>
 
               <div className="offset-lg-1 col-lg-6">
-                <img src="img/testimonial/t1.jpg" alt="Student testimonial" />
+                <img src="img/testimonial/t1.jpg" alt="Testimonial Person" />
               </div>
             </div>
           </div>
@@ -380,32 +339,33 @@ export default function Home() {
             <div className="col-lg-5">
               <div className="section-title text-left text-white">
                 <h2 className="text-white">
-                  Get Started <br />
-                  with Free Courses!
+                  Join Our Community <br />
+                  And Learn for Free
                 </h2>
                 <p>
-                  Sign up today and access special free lessons to boost your learning.
+                  Sign up today to get access to free courses and start your learning journey with us.
                 </p>
               </div>
             </div>
             <div className="offset-lg-3 col-lg-4 col-md-6">
               <div className="course-form-section">
-                <h3 className="text-white">Free Courses!</h3>
-                <p className="text-white">Time to learn!</p>
+                <h3 className="text-white">Get Free Courses Now</h3>
+                <p className="text-white">It's time to learn something new!</p>
                 <form className="course-form-area contact-page-form course-form text-right" id="myForm" action="mail.html" method="post">
                   <div className="form-group col-md-12">
-                    <input type="text" className="form-control" id="name" name="name" placeholder="Name" onFocus={(e) => e.target.placeholder = ''}
-                      onBlur={(e) => e.target.placeholder = 'Name'} />
+                    <input type="text" className="form-control" id="name" name="name" placeholder="Your Name" onFocus={(e) => e.target.placeholder = ''}
+                      onBlur={(e) => e.target.placeholder = 'Your Name'} />
                   </div>
                   <div className="form-group col-md-12">
-                    <input type="text" className="form-control" id="subject" name="subject" placeholder="Phone" onFocus={(e) => e.target.placeholder = ''}
-                      onBlur={(e) => e.target.placeholder = 'Phone'} />
+                    <input type="text" className="form-control" id="subject" name="subject" placeholder="Phone Number" onFocus={(e) => e.target.placeholder = ''}
+                      onBlur={(e) => e.target.placeholder = 'Phone Number'} />
                   </div>
                   <div className="form-group col-md-12">
-                    <input type="email" className="form-control" id="email" name="email" placeholder="Email" onFocus={(e) => e.target.placeholder = ''}
-                      onBlur={(e) => e.target.placeholder = 'Email'} />
+                    <input type="email" className="form-control" id="email" name="email" placeholder="Email Address" onFocus={(e) => e.target.placeholder = ''}
+                      onBlur={(e) => e.target.placeholder = 'Email Address'} />
                   </div>
                   <div className="col-lg-12 text-center">
+                    <Link to="/register" className="text-primary">Sign Up Now</Link>
                     <button className="btn text-uppercase">Sign Up Now</button>
                   </div>
                 </form>
@@ -423,28 +383,28 @@ export default function Home() {
             <div className="col-lg-12">
               <div className="section-title text-left">
                 <h2>
-                  Student Blog <br />
-                  Tips & Guides
+                  Our Latest <br />
+                  Insights and Articles
                 </h2>
                 <p>
-                  Read our latest articles for study tips and education news in 2025.
+                  Stay updated with the newest trends and valuable information from our blog.
                 </p>
               </div>
             </div>
             <div className="col-lg-4 col-md-6">
               <div className="single-blog-post">
-                <img src="img/blog-post/b1.jpg" className="img-fluid" alt="Student study tips blog" />
+                <img src="img/blog-post/b1.jpg" className="img-fluid" alt="Blog Post 1" />
                 <div className="overlay"></div>
                 <div className="top-text">
-                  <p>Jan 15, 2025</p>
-                  <p>150 likes</p>
-                  <p>10 comments</p>
+                  <p>29th, Oct, 2018</p>
+                  <p>121 likes</p>
+                  <p>05 comments</p>
                 </div>
                 <div className="text">
-                  <h4 className="text-white">Top Study Habits for 2025 Success</h4>
+                  <h4 className="text-white">Smart Learning Strategies</h4>
                   <div>
                     <p>
-                      Learn how to study better and get higher grades.
+                      Learn effective ways to study smarter, not just harder.
                     </p>
                   </div>
                   <a href="#" className="primary-btn">
@@ -456,18 +416,18 @@ export default function Home() {
             </div>
             <div className="col-lg-4 col-md-6 mt--160">
               <div className="single-blog-post">
-                <img src="img/blog-post/b2.jpg" className="img-fluid" alt="Student time management blog" />
+                <img src="img/blog-post/b2.jpg" className="img-fluid" alt="Blog Post 2" />
                 <div className="overlay"></div>
                 <div className="top-text">
-                  <p>Jan 10, 2025</p>
-                  <p>200 likes</p>
-                  <p>18 comments</p>
+                  <p>29th, Oct, 2018</p>
+                  <p>121 likes</p>
+                  <p>05 comments</p>
                 </div>
                 <div className="text">
-                  <h4 className="text-white">Mastering Time Management for Students</h4>
+                  <h4 className="text-white">Future of Online Education</h4>
                   <div>
                     <p>
-                      Tips to balance studies and free time like a pro.
+                      Explore trends shaping how we learn and teach online.
                     </p>
                   </div>
                   <a href="#" className="primary-btn">
@@ -479,18 +439,18 @@ export default function Home() {
             </div>
             <div className="col-lg-4 col-md-6 mt--260">
               <div className="single-blog-post">
-                <img src="img/blog-post/b3.jpg" className="img-fluid" alt="Student motivation blog" />
+                <img src="img/blog-post/b3.jpg" className="img-fluid" alt="Blog Post 3" />
                 <div className="overlay"></div>
                 <div className="top-text">
-                  <p>Jan 05, 2025</p>
-                  <p>90 likes</p>
-                  <p>07 comments</p>
+                  <p>29th, Oct, 2018</p>
+                  <p>121 likes</p>
+                  <p>05 comments</p>
                 </div>
                 <div className="text">
-                  <h4 className="text-white">Staying Motivated Throughout Your Studies</h4>
+                  <h4 className="text-white">Boosting Productivity for Students</h4>
                   <div>
                     <p>
-                      Keep your energy high and stay focused on your goals.
+                      Tips and tricks to manage your time and stay focused.
                     </p>
                   </div>
                   <a href="#" className="primary-btn">

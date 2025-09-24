@@ -1,17 +1,47 @@
-  const mongoose = require('mongoose');
+const mongoose = require('mongoose');
+const { Schema } = mongoose;
 
-  const studentSchema = new mongoose.Schema({
-    school: { type: mongoose.Schema.ObjectId, ref: 'School' },
-    email: { type: String, required: true },
-    name: { type: String, required: true },
-    student_class: { type: String, required: true },
-    age: { type: String, required: true },
-    gender: { type: String, required: true },
-    guardian: { type: String, required: true },
-    guardian_phone: { type: String, required: true },
-    student_image: { type: String, required: true },
-    password: { type: String, required: true },
-    createdAt: { type: Date, default: new Date() }
-  });
+const studentSchema = new Schema({
+  school: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'School',
+    required: true,
+  },
+  name: {
+    type: String,
+    required: true,
+    trim: true,
+  },
+  email: {
+    type: String,
+    required: true,
+    unique: true,
+    lowercase: true,
+    trim: true,
+  },
+  password: {
+    type: String,
+    required: true,
+  },
+  student_class: {
+    type: Number,
+  },
+  age: {
+    type: Number,
+  },
+  gender: {
+    type: String,
+  },
+  guardian: {
+    type: String,
+  },
+  guardian_phone: {
+    type: String,
+  },
+  student_image: {
+    type: String,
+  },
+}, { timestamps: true });
 
-  module.exports = mongoose.model("Student", studentSchema);
+const Student = mongoose.model('Student', studentSchema);
+module.exports = Student;

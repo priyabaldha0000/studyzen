@@ -1,15 +1,62 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import axios from "axios";
 
-export default function Student() {
+export default function Students() {
+  const [schools, setSchools] = useState([]);
+  const [search, setSearch] = useState("");
+
+  useEffect(() => {
+    fetchSchools();
+  }, []);
+
+  const fetchSchools = async () => {
+    try {
+      const token = localStorage.getItem("token");
+      const res = await axios.get("http://localhost:5000/api/school/all", {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      if (res.data.success) {
+        setSchools(res.data.schools);
+      }
+    } catch (err) {
+      console.error("Error fetching schools:", err);
+    }
+  };
+
+  const deleteSchool = async (id) => {
+    if (!window.confirm("Are you sure you want to delete this school?")) return;
+    try {
+      const token = localStorage.getItem("token");
+      await axios.delete(`http://localhost:5000/api/school/${id}`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      fetchSchools();
+    } catch (err) {
+      console.error("Error deleting school:", err);
+    }
+  };
+
+  const filtered = schools.filter(
+    (s) =>
+      s.school_name.toLowerCase().includes(search.toLowerCase()) ||
+      s.email.toLowerCase().includes(search.toLowerCase())
+  );
+
   return (
     <section className="section">
       <div className="card">
         <div className="card-header">
-          <h4>Drag &amp; Drop Row Table</h4>
+          <h4>Manage Schools</h4>
           <div className="card-header-action">
-            <form>
+            <form onSubmit={(e) => e.preventDefault()}>
               <div className="input-group">
-                <input type="text" className="form-control" placeholder="Search" />
+                <input
+                  type="text"
+                  className="form-control"
+                  placeholder="Search"
+                  value={search}
+                  onChange={(e) => setSearch(e.target.value)}
+                />
                 <div className="input-group-btn">
                   <button className="btn btn-primary" type="button">
                     <i className="fas fa-search"></i>
@@ -19,194 +66,53 @@ export default function Student() {
             </form>
           </div>
         </div>
-
         <div className="card-body p-0">
           <div className="table-responsive">
             <table className="table table-striped" id="sortable-table">
               <thead>
                 <tr>
-                  <th className="text-center">
-                    <i className="fas fa-th"></i>
-                  </th>
-                  <th>Task Name</th>
-                  <th>Progress</th>
-                  <th>Members</th>
-                  <th>Due Date</th>
-                  <th>Status</th>
+                  <th>#</th>
+                  <th>School Name</th>
+                  <th>Email</th>
+                  <th>Owner Name</th>
+                  <th>Image</th>
                   <th>Action</th>
                 </tr>
               </thead>
-
               <tbody>
-                <tr>
-                  <td>
-                    <div className="sort-handler">
-                      <i className="fas fa-th"></i>
-                    </div>
-                  </td>
-                  <td>Create a mobile app</td>
-                  <td className="align-middle">
-                    <div className="progress" data-height="4" title="100%">
-                      <div className="progress-bar bg-success" style={{ width: "100%" }}></div>
-                    </div>
-                  </td>
-                  <td>
-                    <img
-                      alt="user"
-                      src="/assets/img/users/user-5.png"
-                      className="rounded-circle"
-                      width="35"
-                      title="Wildan Ahdian"
-                    />
-                  </td>
-                  <td>2018-01-20</td>
-                  <td>
-                    <div className="badge badge-success">Completed</div>
-                  </td>
-                  <td>
-                    <a href="#" className="btn btn-primary">
-                      Detail
-                    </a>
-                  </td>
-                </tr>
-
-                <tr>
-                  <td>
-                    <div className="sort-handler">
-                      <i className="fas fa-th"></i>
-                    </div>
-                  </td>
-                  <td>Redesign homepage</td>
-                  <td className="align-middle">
-                    <div className="progress" data-height="4" title="40%">
-                      <div className="progress-bar" style={{ width: "40%" }}></div>
-                    </div>
-                  </td>
-                  <td>
-                    <img
-                      alt="user"
-                      src="/assets/img/users/user-1.png"
-                      className="rounded-circle"
-                      width="35"
-                      title="Nur Alpiana"
-                    />
-                    <img
-                      alt="user"
-                      src="/assets/img/users/user-3.png"
-                      className="rounded-circle"
-                      width="35"
-                      title="Hariono Yusup"
-                    />
-                    <img
-                      alt="user"
-                      src="/assets/img/users/user-4.png"
-                      className="rounded-circle"
-                      width="35"
-                      title="Bagus Dwi Cahya"
-                    />
-                  </td>
-                  <td>2018-04-10</td>
-                  <td>
-                    <div className="badge badge-info">Todo</div>
-                  </td>
-                  <td>
-                    <a href="#" className="btn btn-primary">
-                      Detail
-                    </a>
-                  </td>
-                </tr>
-
-                <tr>
-                  <td>
-                    <div className="sort-handler">
-                      <i className="fas fa-th"></i>
-                    </div>
-                  </td>
-                  <td>Backup database</td>
-                  <td className="align-middle">
-                    <div className="progress" data-height="4" title="70%">
-                      <div className="progress-bar bg-warning" style={{ width: "70%" }}></div>
-                    </div>
-                  </td>
-                  <td>
-                    <img
-                      alt="user"
-                      src="/assets/img/users/user-1.png"
-                      className="rounded-circle"
-                      width="35"
-                      title="Rizal Fakhri"
-                    />
-                    <img
-                      alt="user"
-                      src="/assets/img/users/user-2.png"
-                      className="rounded-circle"
-                      width="35"
-                      title="Hasan Basri"
-                    />
-                  </td>
-                  <td>2018-01-29</td>
-                  <td>
-                    <div className="badge badge-warning">In Progress</div>
-                  </td>
-                  <td>
-                    <a href="#" className="btn btn-primary">
-                      Detail
-                    </a>
-                  </td>
-                </tr>
-
-                <tr>
-                  <td>
-                    <div className="sort-handler">
-                      <i className="fas fa-th"></i>
-                    </div>
-                  </td>
-                  <td>Input data</td>
-                  <td className="align-middle">
-                    <div className="progress" data-height="4" title="100%">
-                      <div className="progress-bar bg-success" style={{ width: "100%" }}></div>
-                    </div>
-                  </td>
-                  <td>
-                    <img
-                      alt="user"
-                      src="/assets/img/users/user-2.png"
-                      className="rounded-circle"
-                      width="35"
-                      title="Rizal Fakhri"
-                    />
-                    <img
-                      alt="user"
-                      src="/assets/img/users/user-5.png"
-                      className="rounded-circle"
-                      width="35"
-                      title="Isnap Kiswandi"
-                    />
-                    <img
-                      alt="user"
-                      src="/assets/img/users/user-4.png"
-                      className="rounded-circle"
-                      width="35"
-                      title="Yudi Nawawi"
-                    />
-                    <img
-                      alt="user"
-                      src="/assets/img/users/user-1.png"
-                      className="rounded-circle"
-                      width="35"
-                      title="Khaerul Anwar"
-                    />
-                  </td>
-                  <td>2018-01-16</td>
-                  <td>
-                    <div className="badge badge-success">Completed</div>
-                  </td>
-                  <td>
-                    <a href="#" className="btn btn-primary">
-                      Detail
-                    </a>
-                  </td>
-                </tr>
+                {filtered.length > 0 ? (
+                  filtered.map((s, i) => (
+                    <tr key={s._id}>
+                      <td>{i + 1}</td>
+                      <td>{s.school_name}</td>
+                      <td>{s.email}</td>
+                      <td>{s.owner_name}</td>
+                      <td>
+                        <img
+                          src={`http://localhost:5000/uploads/school-images/${s.school_image}`}
+                          alt={s.school_name}
+                          className="rounded-circle"
+                          width="40"
+                          height="40"
+                        />
+                      </td>
+                      <td>
+                        <button
+                          className="btn btn-danger btn-sm"
+                          onClick={() => deleteSchool(s._id)}
+                        >
+                          Delete
+                        </button>
+                      </td>
+                    </tr>
+                  ))
+                ) : (
+                  <tr>
+                    <td colSpan="6" className="text-center">
+                      No schools found.
+                    </td>
+                  </tr>
+                )}
               </tbody>
             </table>
           </div>
@@ -214,4 +120,4 @@ export default function Student() {
       </div>
     </section>
   );
-}
+} 

@@ -32,7 +32,6 @@ export default function Login() {
 
   return (
     <>
-
       {message && (
         <MessageSnackbar
           message={message}
@@ -41,9 +40,31 @@ export default function Login() {
         />
       )}
 
+      {/* ================ Start Banner Area ================= */}
+      <section className="banner-area">
+        <div className="container">
+          <div className="row justify-content-center align-items-center">
+            <div className="col-lg-12 banner-right">
+              <h1 className="text-white">Login</h1>
+              <p className="mx-auto text-white mt-20 mb-40">
+                Access your account to start learning.
+              </p>
+              <div className="link-nav">
+                <span className="box">
+                  <Link to="/">Home </Link>
+                  <i className="lnr lnr-arrow-right"></i>
+                  <Link to="/login">Login</Link>
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      {/* ================ End Banner Area ================= */}
+
       <section
         className="contact-page-area section-gap"
-        style={{ paddingTop: "120px", minHeight: "100vh" }}
+        style={{ paddingTop: "120px", minHeight: "10vh" }}
       >
         <div className="container">
           <div className="row">
@@ -113,7 +134,6 @@ export default function Login() {
           </div>
         </div>
       </section>
-
     </>
   );
 }

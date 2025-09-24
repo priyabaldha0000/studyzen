@@ -1,11 +1,8 @@
-const express = require("express");
+const express = require('express');
 const router = express.Router();
-const studentController = require("../controllers/student.controller");
+const { getAllStudents } = require('../controllers/student.controller');
+const authMiddleware = require('../auth/auth'); // Assuming you have this middleware
 
-// Get all students
-router.get("/", studentController.getAllStudents);
-
-// Add new student (optional)
-router.post("/", studentController.addStudent);
+router.get('/all', authMiddleware(['ADMIN']), getAllStudents);
 
 module.exports = router;

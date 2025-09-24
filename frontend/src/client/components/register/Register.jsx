@@ -2,6 +2,7 @@ import * as React from "react";
 import { useFormik } from "formik";
 // import { registerSchema } from "../../../yupSchema/registerSchema";
 import axios from "axios";
+import { Link } from "react-router-dom"; // Import Link for navigation
 import MessageSnackbar from "../../../basic utility components/snackbar/MessageSnackbar";
 
 
@@ -59,7 +60,6 @@ export default function Register() {
 
   return (
     <>
-
       {message && (
         <MessageSnackbar
           message={message}
@@ -67,6 +67,28 @@ export default function Register() {
           handleClose={handleMessageClose}
         />
       )}
+      
+      {/* ================ Start Banner Area ================= */}
+      <section className="banner-area">
+        <div className="container">
+          <div className="row justify-content-center align-items-center">
+            <div className="col-lg-12 banner-right">
+              <h1 className="text-white">Register</h1>
+              <p className="mx-auto text-white mt-20 mb-40">
+                Create a new account to join us.
+              </p>
+              <div className="link-nav">
+                <span className="box">
+                  <Link to="/">Home </Link>
+                  <i className="lnr lnr-arrow-right"></i>
+                  <Link to="/register">Register</Link>
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      {/* ================ End Banner Area ================= */}
 
       <section
         className="contact-page-area section-gap"
@@ -81,7 +103,7 @@ export default function Register() {
                 onSubmit={Formik.handleSubmit}
                 noValidate
               >
-                <h2 className="mb-4 text-center">Register</h2>
+                <h2 className="mb-4 text-center">Register a New School</h2>
 
                 {/* Image upload */}
                 <div className="form-group text-left mb-3">
@@ -210,12 +232,17 @@ export default function Register() {
                 <button type="submit" className="btn primary-btn" style={{ float: "right" }}>
                   Submit
                 </button>
+                <p className="mt-3 text-center">
+                  Already have an account?{" "}
+                  <Link to="/login" className="text-primary">
+                    Login here
+                  </Link>
+                </p>                
               </form>
             </div>
           </div>
         </div>
       </section>
-
     </>
   );
 }

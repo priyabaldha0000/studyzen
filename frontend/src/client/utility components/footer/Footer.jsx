@@ -89,14 +89,10 @@ export default function Footer() {
         <div className="footer-bottom row align-items-center">
           <p className="footer-text m-0 col-lg-8 col-md-12">
             Copyright &copy; {new Date().getFullYear()} All rights reserved |
-            This template is made with{" "}
-            <i className="fa fa-heart-o" aria-hidden="true"></i> by{" "}
-            <a href="https://colorlib.com" target="_blank" rel="noreferrer">
-              Colorlib
-            </a>
+            Studyzen
           </p>
           <div className="col-lg-4 col-md-12 footer-social">
-            <a href="#"><i className="fa fa-facebook"></i></a>
+            <a href="https://www.facebook.com/"><i className="fa fa-facebook"></i></a>
             <a href="#"><i className="fa fa-twitter"></i></a>
             <a href="#"><i className="fa fa-dribbble"></i></a>
             <a href="#"><i className="fa fa-behance"></i></a>

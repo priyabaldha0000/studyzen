@@ -1,58 +1,134 @@
-import * as React from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 
 export default function StudentDashboard() {
-  const [student, setStudent] = React.useState(null);
-  const [loading, setLoading] = React.useState(true);
-  const [message, setMessage] = React.useState("");
+  const [schools, setSchools] = useState([]);
+  const [search, setSearch] = useState("");
 
-  React.useEffect(() => {
-    const fetchStudent = async () => {
-      try {
-        const token = localStorage.getItem("studentToken");
-        if (!token) {
-          setMessage("No token found. Please login.");
-          setLoading(false);
-          return;
-        }
-
-        const resp = await axios.get("http://localhost:5000/api/student/own", {
-          headers: { Authorization: token },
-        });
-
-        setStudent(resp.data.student);
-        setLoading(false);
-      } catch (error) {
-        console.error(error);
-        setMessage(error.response?.data?.message || "Failed to fetch data");
-        setLoading(false);
-      }
-    };
-
-    fetchStudent();
+  useEffect(() => {
+    fetchSchools();
   }, []);
 
-  if (loading) return <p>Loading...</p>;
+  // ✅ Fetch all schools from backend
+  const fetchSchools = async () => {
+    try {
+      const token = localStorage.getItem("token"); // Admin JWT
+      const res = await axios.get("http://localhost:5000/api/school/all", {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      if (res.data.success) {
+        setSchools(res.data.schools);
+      }
+    } catch (err) {
+      console.error("Error fetching schools:", err);
+    }
+  };
+
+  // ✅ Delete school
+  const deleteSchool = async (id) => {
+    if (!window.confirm("Are you sure you want to delete this school?")) return;
+    try {
+      const token = localStorage.getItem("token");
+      await axios.delete(`http://localhost:5000/api/school/${id}`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      fetchSchools();
+    } catch (err) {
+      console.error("Error deleting school:", err);
+    }
+  };
+
+  // ✅ Filter by search (name or email)
+  const filtered = schools.filter(
+    (s) =>
+      s.school_name.toLowerCase().includes(search.toLowerCase()) ||
+      s.email.toLowerCase().includes(search.toLowerCase())
+  );
 
   return (
-    <div className="container" style={{ paddingTop: "120px" }}>
-      {message && <p>{message}</p>}
-      {student && (
-        <div>
-          <h2>Welcome, {student.name}</h2>
-          <img
-            src={`http://localhost:5000/images/students/${student.student_image}`}
-            alt="Student"
-            style={{ maxHeight: "200px", borderRadius: "8px" }}
-          />
-          <p>Email: {student.email}</p>
-          <p>Class: {student.student_class}</p>
-          <p>Age: {student.age}</p>
-          <p>Gender: {student.gender}</p>
-          <p>Guardian: {student.guardian}</p>
-          <p>Guardian Phone: {student.guardian_phone}</p>
+    <section className="section">
+      <div className="card">
+        <div className="card-header">
+          <h4>Manage Schools</h4>
+          <div className="card-header-action">
+            <form
+              onSubmit={(e) => {
+                e.preventDefault();
+              }}
+            >
+              <div className="input-group">
+                <input
+                  type="text"
+                  className="form-control"
+                  placeholder="Search"
+                  value={search}
+                  onChange={(e) => setSearch(e.target.value)}
+                />
+                <div className="input-group-btn">
+                  <button className="btn btn-primary" type="button">
+                    <i className="fas fa-search"></i>
+                  </button>
+                </div>
+              </div>
+            </form>
+          </div>
         </div>
-      )}
-    </div>
+
+        <div className="card-body p-0">
+          <div className="table-responsive">
+            <table className="table table-striped" id="sortable-table">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>School Name</th>
+                  <th>Email</th>
+                  <th>Owner Name</th>
+                  <th>Image</th>
+                  <th>Created At</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+
+              <tbody>
+                {filtered.length > 0 ? (
+                  filtered.map((s, i) => (
+                    <tr key={s._id}>
+                      <td>{i + 1}</td>
+                      <td>{s.school_name}</td>
+                      <td>{s.email}</td>
+                      <td>{s.owner_name}</td>
+                      <td>
+                        <img
+                          src={`/uploads/schools/${s.school_image}`}
+                          alt={s.school_name}
+                          className="rounded-circle"
+                          width="40"
+                          height="40"
+                        />
+                      </td>
+                      <td>{new Date(s.createdAt).toLocaleDateString()}</td>
+                      <td>
+                        <button
+                          className="btn btn-danger btn-sm"
+                          onClick={() => deleteSchool(s._id)}
+                        >
+                          Delete
+                        </button>
+                      </td>
+                    </tr>
+                  ))
+                ) : (
+                  <tr>
+                    <td colSpan="7" className="text-center">
+                      No schools found.
+                    </td>
+                  </tr>
+                )}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </section>
   );
 }

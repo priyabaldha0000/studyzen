@@ -3,31 +3,34 @@ const express = require('express');
 const cors = require('cors');
 const mongoose = require('mongoose');
 const cookieParser = require('cookie-parser');
+const path = require('path');
 
 // ROUTER IMPORT
 const schoolRouter = require("./routers/school.router")
-// const teacherRouter = require("./routers/teacher.router");
-// const studentRouter = require("./routers/student.router");
+const studentRouter = require("./routers/student.router");
 
 const app = express();
 app.use(express.json());
-app.use(express.urlencoded({extended:true}))
+app.use(express.urlencoded({ extended: true }))
 app.use(cors());
 app.use(cookieParser());
 
 //mongodb connection
-mongoose.connect('mongodb://localhost:27017/studyzen2025').then(db=>{
+mongoose.connect(process.env.MONGO_URI).then(db => {
     console.log("MongoDb is connected successfully")
-}).catch(e=>{
-    console.log("MongoDb error",e)
+}).catch(e => {
+    console.log("MongoDb error", e)
 })
-
 
 //ROUTER
 app.use("/api/school", schoolRouter);
-// app.use("/api/teacher", teacherRouter);
-// app.use("/api/student", studentRouter);
-const PORT = process.env.PORT;
-app.listen(PORT,()=>{
-    console.log("Server is running at PORT=>",PORT)
+app.use("/api/student", studentRouter);
+
+const PORT = process.env.PORT || 5000;
+app.listen(PORT, () => {
+    console.log(`Server is running at PORT=> ${PORT}`)
 })
+
+// Correctly serving static files
+app.use('/uploads/student-images', express.static(path.join(__dirname, '..', 'frontend', 'public', 'images', 'uploaded', 'student')));
+app.use('/uploads/school-images', express.static(path.join(__dirname, '..', 'frontend', 'public', 'images', 'uploaded', 'school')));

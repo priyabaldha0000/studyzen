@@ -1,6 +1,3 @@
-// CRUD applications - CREATE,READ, UPDATE and DELETE
-// AUTHENTICATION - SCHOOL, STUDENT AND TEACHER
-
 require("dotenv").config();
 const formidable = require("formidable");
 const path = require("path");
@@ -9,177 +6,239 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 
 const School = require("../models/school.model");
-const { count } = require("console");
 
 module.exports = {
-    registerSchool: async (req, res) => {
-        try {
-            const form = new formidable.IncomingForm();
-            form.parse(req, async (err, fields, files) => {
-                const existing = await School.findOne({ email: fields.email[0] });
-                if (existing) {
-                    return res.status(409).json({ success:false, message:"Email is already registered." });
-                }
-                else{
-
-                console.log("Fields received:", fields);  
-                console.log("Files received:", files); 
-                if (err) {
-                    return res.status(400).json({ success: false, message: "Form parse error" });
-                }
-
-                if (!files.image || files.image.length === 0) {
-                    return res.status(400).json({ success: false, message: "Image is required" });
-                }
-                const school  = await School.findOne({email:fields.email[0]});
-                if(school){
-                    return res.status(409).json({success:false, message:"Email is already registered."})
-                }else{
-
-                const photo = files.image[0];
-                let filepath = photo.filepath;
-                let originalFilename = photo.originalFilename.replace(" ", "_"); // photo one
-                let newPath = path.join(__dirname, process.env.SCHOOL_IMAGE_PATH, originalFilename);
-
-                let photoData = fs.readFileSync(filepath);
-                fs.writeFileSync(newPath, photoData);
-
-                const salt = bcrypt.genSaltSync(10);
-                const hashPassword = bcrypt.hashSync(fields.password[0], salt)
-                const newSchool = new School({
-                    school_name: fields.school_name[0],
-                    email: fields.email[0],
-                    owner_name: fields.owner_name[0],
-                    school_image: originalFilename,
-                    password: hashPassword
-                })
-
-                const savedSchool = await newSchool.save();
-                res.status(200).json({ success: true, data: savedSchool, message: "School is Registered Successfully." })
-            }
-        }
-            })
-        } catch (error) {
-            res.status(500).json({ success: false, message: "School Registration Failed.!" })
-        }
-    },
-    loginSchool: async (req, res) => {
+  // ✅ CREATE (Register School)
+  registerSchool: async (req, res) => {
     try {
-        // === Admin login check ===
-        if(req.body.email === "admin123@gmail.com" && req.body.password === "admin") {
-            const jwtSecret = process.env.JWT_SECRET;
-            const token = jwt.sign({
-                id: "admin123", // arbitrary ID for admin
-                email: "admin123@gmail.com",
-                role: "ADMIN"
-            }, jwtSecret);
-            return res.status(200).json({
-                success: true,
-                message: "Admin Login Success.",
-                user: {
-                    id: "admin123",
-                    email: "admin123@gmail.com",
-                    role: "ADMIN",
-                    token: token,
-                    redirect: "/school" // redirect to home page
-                }
-            });
+      const form = new formidable.IncomingForm();
+      form.parse(req, async (err, fields, files) => {
+        if (err) {
+          return res.status(400).json({ success: false, message: "Form parse error" });
         }
 
-        // === Existing School login code ===
-        const school = await School.findOne({ email: req.body.email });
-        if (school) {
-            const isAuth = bcrypt.compareSync(req.body.password, school.password);
-            if (isAuth) {
-                const jwtSecret = process.env.JWT_SECRET;
-                const token = jwt.sign({
-                    id: school._id,
-                    schoolId: school._id,
-                    owner_name: school.owner_name,
-                    school_name: school.school_name,
-                    image_url: school.school_image,
-                    role: "SCHOOL"
-                }, jwtSecret);
-                res.header("Authorization", token)
-                res.status(200).json({
-                    success: true, message: "Success Login.",
-                    user: {
-                        id: school._id,
-                        owner_name: school.owner_name,
-                        school_name: school.school_name,
-                        image_url: school.school_image,
-                        role: "SCHOOL",
-                        token: token
-                    }
-                });
-            } else {
-                res.status(401).json({ success: false, message: "Password is Incorrect." })
-            }
-        } else {
-            res.status(401).json({ success: false, message: "Email is not registered." })
+        const existing = await School.findOne({ email: fields.email[0] });
+        if (existing) {
+          return res.status(409).json({ success: false, message: "Email is already registered." });
         }
+
+        if (!files.image || files.image.length === 0) {
+          return res.status(400).json({ success: false, message: "Image is required" });
+        }
+
+        const photo = files.image[0];
+        let filepath = photo.filepath;
+        let originalFilename = photo.originalFilename.replace(" ", "_");
+        let newPath = path.join(__dirname, process.env.SCHOOL_IMAGE_PATH, originalFilename);
+
+        let photoData = fs.readFileSync(filepath);
+        fs.writeFileSync(newPath, photoData);
+
+        const salt = bcrypt.genSaltSync(10);
+        const hashPassword = bcrypt.hashSync(fields.password[0], salt);
+
+        const newSchool = new School({
+          school_name: fields.school_name[0],
+          email: fields.email[0],
+          owner_name: fields.owner_name[0],
+          school_image: originalFilename,
+          password: hashPassword
+        });
+
+        const savedSchool = await newSchool.save();
+        res.status(201).json({ success: true, data: savedSchool, message: "School Registered Successfully." });
+      });
     } catch (error) {
-        res.status(500).json({ success: false, message: "Internal Server Error[SCHOOL LOGIN]." })
+      console.error(error);
+      res.status(500).json({ success: false, message: "School Registration Failed.!" });
     }
-},
+  },
 
+  // ✅ LOGIN
+  loginSchool: async (req, res) => {
+    try {
+      // === Admin login check ===
+      if (req.body.email === "admin123@gmail.com" && req.body.password === "admin") {
+        const jwtSecret = process.env.JWT_SECRET;
+        const token = jwt.sign({
+          id: "admin123",
+          email: "admin123@gmail.com",
+          role: "ADMIN"
+        }, jwtSecret, { expiresIn: "1d" });
 
-    getAllSchools: async (req, res) => {
-        try {
-            const schools = await School.find().select(['-password', '-_id', '-email', '-owner_name', '-createdAt']);
-            res.status(200).json({ success: true, message: "Success in fetching all schools.", schools })
-        } catch (error) {
-            res.status(500).json({ success: false, message: "Internal Server Error [ ALL SCHOOL DATA ]." })
-        }
-    },
+        return res.status(200).json({
+          success: true,
+          message: "Admin Login Success.",
+          user: {
+            id: "admin123",
+            email: "admin123@gmail.com",
+            role: "ADMIN",
+            token,
+            redirect: "/admin/dashboard"
+          }
+        });
+      }
 
-    getSchoolOwnData: async (req, res) => {
-        try {
-            const id = req.user.id;
-            const school = await School.findOne({ _id: id });
-            if (school) {
-                res.status(200).json({ success: true, message: "Success in fetching own school data.", school })
-            } else {
-                res.status(404).json({ success: true, message: "School not found." })
+      // === School login ===
+      const school = await School.findOne({ email: req.body.email });
+      if (school) {
+        const isAuth = bcrypt.compareSync(req.body.password, school.password);
+        if (isAuth) {
+          const jwtSecret = process.env.JWT_SECRET;
+          const token = jwt.sign({
+            id: school._id,
+            school_name: school.school_name,
+            email: school.email,
+            owner_name: school.owner_name,
+            image_url: school.school_image,
+            role: "SCHOOL"
+          }, jwtSecret, { expiresIn: "1d" });
+
+          return res.status(200).json({
+            success: true,
+            message: "School Login Successful.",
+            user: {
+              id: school._id,
+              school_name: school.school_name,
+              owner_name: school.owner_name,
+              email: school.email,
+              image_url: school.school_image,
+              role: "SCHOOL",
+              token
             }
-        } catch (error) {
-            res.status(500).json({ success: false, message: "Internal Server Error [ OWN SCHOOL DATA ]." })
+          });
+        } else {
+          return res.status(401).json({ success: false, message: "Password is Incorrect." });
         }
-    },
-
-    updateSchool: async (req, res) => {
-        try {
-            const id = req.user.id;
-            const form = new formidable.IncomingForm();
-            form.parse(req, async (err, fields, files) => {
-                const school = await School.findOne({ _id: id });
-                if (files.image) {
-                    const photo = files.image[0];
-                    let filepath = photo.filepath;
-                    let originalFilename = photo.originalFilename.replace(" ", "_"); // photo one
-
-                    if (school.school_image) {
-                        let oldImagePath = path.join(__dirname, process.env.SCHOOL_IMAGE_PATH, school.school_image);
-                        if (fs.existsSync(oldImagePath)) {
-                            fs.unlink(oldImagePath, (err) => {
-                                if (err) console.log(err);
-                            });
-                        }
-                    }
-                    let newPath = path.join(__dirname, process.env.SCHOOL_IMAGE_PATH, originalFilename);
-                    let photoData = fs.readFileSync(filepath);
-                    fs.writeFileSync(newPath, photoData);
-
-                    Object.keys(fields).forEach((field) => {
-                        school[field] = fields[field][0]
-                    })
-                    await school.save();
-                    res.status(200).json({ success: true, message: "School updated Successfully.", school })
-                }
-            })
-        } catch (error) {
-            res.status(500).json({ success: false, message: "School Registration Failed ." })
-        }
+      } else {
+        return res.status(401).json({ success: false, message: "Email is not registered." });
+      }
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ success: false, message: "Internal Server Error [SCHOOL LOGIN]." });
     }
+  },
 
-}
+  // ✅ READ (All Schools - Admin Only)
+  getAllSchools: async (req, res) => {
+    try {
+      const schools = await School.find().select([
+        "school_name", "owner_name", "email", "school_image", "createdAt"
+      ]);
+
+      res.status(200).json({
+        success: true,
+        message: "Fetched all registered schools successfully.",
+        schools
+      });
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ success: false, message: "Internal Server Error [ALL SCHOOL DATA]." });
+    }
+  },
+
+  // ✅ READ (Single School - Own Profile)
+  getSchoolOwnData: async (req, res) => {
+    try {
+      const id = req.user.id;
+      const school = await School.findById(id).select(["-password"]);
+      if (school) {
+        res.status(200).json({ success: true, message: "Fetched own school data.", school });
+      } else {
+        res.status(404).json({ success: false, message: "School not found." });
+      }
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ success: false, message: "Internal Server Error [OWN SCHOOL DATA]." });
+    }
+  },
+
+  // ✅ UPDATE (School updates own profile)
+  updateSchool: async (req, res) => {
+    try {
+      const id = req.user.id;
+      const form = new formidable.IncomingForm();
+      form.parse(req, async (err, fields, files) => {
+        const school = await School.findById(id);
+        if (!school) {
+          return res.status(404).json({ success: false, message: "School not found." });
+        }
+
+        if (files.image) {
+          const photo = files.image[0];
+          let filepath = photo.filepath;
+          let originalFilename = photo.originalFilename.replace(" ", "_");
+
+          if (school.school_image) {
+            let oldImagePath = path.join(__dirname, process.env.SCHOOL_IMAGE_PATH, school.school_image);
+            if (fs.existsSync(oldImagePath)) {
+              fs.unlinkSync(oldImagePath);
+            }
+          }
+
+          let newPath = path.join(__dirname, process.env.SCHOOL_IMAGE_PATH, originalFilename);
+          let photoData = fs.readFileSync(filepath);
+          fs.writeFileSync(newPath, photoData);
+          school.school_image = originalFilename;
+        }
+
+        Object.keys(fields).forEach((field) => {
+          school[field] = fields[field][0];
+        });
+
+        await school.save();
+        res.status(200).json({ success: true, message: "School updated Successfully.", school });
+      });
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ success: false, message: "School Update Failed." });
+    }
+  },
+
+  // ✅ UPDATE (Admin can update any school)
+  updateSchoolByAdmin: async (req, res) => {
+    try {
+      const { id } = req.params;
+      const updates = req.body;
+
+      const school = await School.findById(id);
+      if (!school) {
+        return res.status(404).json({ success: false, message: "School not found." });
+      }
+
+      Object.keys(updates).forEach((key) => {
+        school[key] = updates[key];
+      });
+
+      await school.save();
+      res.status(200).json({ success: true, message: "School updated successfully by Admin.", school });
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ success: false, message: "Internal Server Error [ADMIN UPDATE SCHOOL]." });
+    }
+  },
+
+  deleteSchool: async (req, res) => {
+    try {
+      const { id } = req.params;
+      const school = await School.findById(id);
+
+      if (!school) {
+        return res.status(404).json({ success: false, message: "School not found." });
+      }
+
+      if (school.school_image) {
+        let imagePath = path.join(__dirname, process.env.SCHOOL_IMAGE_PATH, school.school_image);
+        if (fs.existsSync(imagePath)) {
+          fs.unlinkSync(imagePath);
+        }
+      }
+
+      await School.deleteOne({ _id: id });
+      res.status(200).json({ success: true, message: "School deleted successfully." });
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ success: false, message: "Internal Server Error [DELETE SCHOOL]." });
+    }
+  }
+};

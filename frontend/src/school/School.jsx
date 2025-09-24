@@ -15,7 +15,7 @@ export default function School() {
             <div className="sidebar-brand">
               <a href="#" onClick={() => navigate("/school")}>
                 <img alt="logo" src="/assets/img/logo.png" className="header-logo" />{" "}
-                <span className="logo-name">Admin</span>
+                <span className="logo-name">Admin Desh</span>
               </a>
             </div>
 
