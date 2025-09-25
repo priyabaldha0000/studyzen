@@ -46,7 +46,7 @@ export default function Students() {
     <section className="section">
       <div className="card">
         <div className="card-header">
-          <h4>Manage Schools</h4>
+          <h4>Manage Student</h4>
           <div className="card-header-action">
             <form onSubmit={(e) => e.preventDefault()}>
               <div className="input-group">
@@ -72,9 +72,9 @@ export default function Students() {
               <thead>
                 <tr>
                   <th>#</th>
-                  <th>School Name</th>
+                  <th>Name</th>
                   <th>Email</th>
-                  <th>Owner Name</th>
+                  <th>Address</th>
                   <th>Image</th>
                   <th>Action</th>
                 </tr>

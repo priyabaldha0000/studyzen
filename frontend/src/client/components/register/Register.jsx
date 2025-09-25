@@ -1,12 +1,13 @@
 import * as React from "react";
 import { useFormik } from "formik";
-// import { registerSchema } from "../../../yupSchema/registerSchema";
+import { registerSchema } from "../../../yupSchema/registerSchema";
 import axios from "axios";
 import { Link } from "react-router-dom"; // Import Link for navigation
 import MessageSnackbar from "../../../basic utility components/snackbar/MessageSnackbar";
-
+import { useNavigate } from "react-router-dom";
 
 export default function Register() {
+  const navigate = useNavigate();
   const [file, setFile] = React.useState(null);
   const [imageUrl, setImageUrl] = React.useState(null);
   const fileInputRef = React.useRef(null);
@@ -35,7 +36,7 @@ export default function Register() {
       password: "",
       confirm_password: "",
     },
-    // validationSchema: registerSchema,
+    validationSchema: registerSchema,
     onSubmit: async (values, { resetForm }) => {
       try {
         const fd = new FormData();
@@ -48,6 +49,7 @@ export default function Register() {
         const resp = await axios.post("http://localhost:5000/api/school/register", fd);
         setMessage(resp.data.message);
         setMessageType("success");
+        navigate(resp.data.redirect);
         resetForm();
         handleClearFile();
       } catch (e) {
@@ -103,7 +105,7 @@ export default function Register() {
                 onSubmit={Formik.handleSubmit}
                 noValidate
               >
-                <h2 className="mb-4 text-center">Register a New School</h2>
+                <h2 className="mb-4 text-center">Register</h2>
 
                 {/* Image upload */}
                 <div className="form-group text-left mb-3">
@@ -170,7 +172,7 @@ export default function Register() {
                   <input
                     type="text"
                     name="owner_name"
-                    placeholder="Div"
+                    placeholder="Address"
                     className={`common-input mb-20 form-control ${
                       Formik.touched.owner_name && Formik.errors.owner_name
                         ? "is-invalid"

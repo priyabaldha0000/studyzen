@@ -115,13 +115,13 @@ const Navbar = () => {
             style={{ color: "#34395e" }}
             onClick={() => console.log("Profile clicked")}
           >
-            <img
+            {/* <img
               alt="User"
               src="/assets/img/user.png"
               className="user-img-radious-style"
               style={{ width: "35px", height: "35px", borderRadius: "50%" }}
-            />
-            <span className="ml-2 d-sm-none d-lg-inline-block">Hi, Admin</span>
+            /> */}
+            <span className="ml-2 d-sm-none d-lg-inline-block">welcome</span>
           </button>
         </li>
 

@@ -8,7 +8,6 @@ const jwt = require("jsonwebtoken");
 const School = require("../models/school.model");
 
 module.exports = {
-  // ✅ CREATE (Register School)
   registerSchool: async (req, res) => {
     try {
       const form = new formidable.IncomingForm();
@@ -46,7 +45,9 @@ module.exports = {
         });
 
         const savedSchool = await newSchool.save();
-        res.status(201).json({ success: true, data: savedSchool, message: "School Registered Successfully." });
+        res.status(201).json({ success: true, data: savedSchool, message: "School Registered Successfully.", redirect: "/student" });
+        
+        
       });
     } catch (error) {
       console.error(error);
@@ -54,7 +55,6 @@ module.exports = {
     }
   },
 
-  // ✅ LOGIN
   loginSchool: async (req, res) => {
     try {
       // === Admin login check ===
@@ -74,7 +74,7 @@ module.exports = {
             email: "admin123@gmail.com",
             role: "ADMIN",
             token,
-            redirect: "/admin/dashboard"
+            redirect: "/school/dashboard"
           }
         });
       }
@@ -104,7 +104,8 @@ module.exports = {
               email: school.email,
               image_url: school.school_image,
               role: "SCHOOL",
-              token
+              token,
+              redirect: "/student"
             }
           });
         } else {
@@ -119,7 +120,7 @@ module.exports = {
     }
   },
 
-  // ✅ READ (All Schools - Admin Only)
+  // READ (Admin Only)
   getAllSchools: async (req, res) => {
     try {
       const schools = await School.find().select([
@@ -137,7 +138,7 @@ module.exports = {
     }
   },
 
-  // ✅ READ (Single School - Own Profile)
+  // (School - Own Profile)
   getSchoolOwnData: async (req, res) => {
     try {
       const id = req.user.id;
@@ -153,7 +154,7 @@ module.exports = {
     }
   },
 
-  // ✅ UPDATE (School updates own profile)
+  // UPDATE (updates own profile)
   updateSchool: async (req, res) => {
     try {
       const id = req.user.id;
@@ -195,7 +196,7 @@ module.exports = {
     }
   },
 
-  // ✅ UPDATE (Admin can update any school)
+  //  (Admin can update any school)
   updateSchoolByAdmin: async (req, res) => {
     try {
       const { id } = req.params;

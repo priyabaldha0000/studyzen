@@ -5,14 +5,14 @@ export default function Footer() {
     <footer className="footer-area section-gap">
       <div className="container">
         <div className="row">
-          {/* Top Products */}
+          {/* Subjects */}
           <div className="col-lg-2 col-md-6 single-footer-widget">
-            <h4>Top Products</h4>
+            <h4>Subjects</h4>
             <ul>
-              <li><a href="#">Managed Website</a></li>
-              <li><a href="#">Manage Reputation</a></li>
-              <li><a href="#">Power Tools</a></li>
-              <li><a href="#">Marketing Service</a></li>
+              <li><a href="#">Programming</a></li>
+              <li><a href="#">Web Development</a></li>
+              <li><a href="#">Data Science</a></li>
+              <li><a href="#">Cyber Security</a></li>
             </ul>
           </div>
 
@@ -20,10 +20,10 @@ export default function Footer() {
           <div className="col-lg-2 col-md-6 single-footer-widget">
             <h4>Quick Links</h4>
             <ul>
-              <li><a href="#">Jobs</a></li>
-              <li><a href="#">Brand Assets</a></li>
-              <li><a href="#">Investor Relations</a></li>
-              <li><a href="#">Terms of Service</a></li>
+              <li><a href="#">Assignments</a></li>
+              <li><a href="#">Study Materials</a></li>
+              <li><a href="#">Online Tests</a></li>
+              <li><a href="#">Projects</a></li>
             </ul>
           </div>
 
@@ -31,10 +31,10 @@ export default function Footer() {
           <div className="col-lg-2 col-md-6 single-footer-widget">
             <h4>Features</h4>
             <ul>
-              <li><a href="#">Jobs</a></li>
-              <li><a href="#">Brand Assets</a></li>
-              <li><a href="#">Investor Relations</a></li>
-              <li><a href="#">Terms of Service</a></li>
+              <li><a href="#">Interactive Quizzes</a></li>
+              <li><a href="#">Video Tutorials</a></li>
+              <li><a href="#">Coding Practice</a></li>
+              <li><a href="#">Doubt Solving</a></li>
             </ul>
           </div>
 
@@ -42,17 +42,17 @@ export default function Footer() {
           <div className="col-lg-2 col-md-6 single-footer-widget">
             <h4>Resources</h4>
             <ul>
-              <li><a href="#">Guides</a></li>
-              <li><a href="#">Research</a></li>
-              <li><a href="#">Experts</a></li>
-              <li><a href="#">Agencies</a></li>
+              <li><a href="#">E-Books</a></li>
+              <li><a href="#">Lecture Notes</a></li>
+              <li><a href="#">Previous Papers</a></li>
+              <li><a href="#">Reference Links</a></li>
             </ul>
           </div>
 
           {/* Newsletter */}
           <div className="col-lg-4 col-md-6 single-footer-widget">
             <h4>Newsletter</h4>
-            <p>You can trust us. We only send promo offers.</p>
+            <p>Get updates on new study materials and exam tips.</p>
             <div className="form-wrap" id="mc_embed_signup">
               <form
                 target="_blank"
@@ -89,13 +89,13 @@ export default function Footer() {
         <div className="footer-bottom row align-items-center">
           <p className="footer-text m-0 col-lg-8 col-md-12">
             Copyright &copy; {new Date().getFullYear()} All rights reserved |
-            Studyzen
+            StudyZen
           </p>
           <div className="col-lg-4 col-md-12 footer-social">
             <a href="https://www.facebook.com/"><i className="fa fa-facebook"></i></a>
             <a href="#"><i className="fa fa-twitter"></i></a>
-            <a href="#"><i className="fa fa-dribbble"></i></a>
-            <a href="#"><i className="fa fa-behance"></i></a>
+            <a href="#"><i className="fa fa-linkedin"></i></a>
+            <a href="#"><i className="fa fa-github"></i></a>
           </div>
         </div>
       </div>
