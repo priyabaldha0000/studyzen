@@ -54,6 +54,14 @@ export default function School() {
                 </a>
               </li>
 
+              {/* Students */}
+              <li className="dropdown">
+                <a href="#" onClick={() => navigate("/school/school")} className="nav-link">
+                  <i className="fas fa-school"></i>
+                  <span>School</span>
+                </a>
+              </li>
+
               {/* Teachers */}
               <li className="dropdown">
                 <a href="#" onClick={() => navigate("/school/teachers")} className="nav-link">

@@ -8,16 +8,17 @@ import Dashboard from './school/components/dashboard/Dashboard';
 import Examinations from './school/components/examinations/Examinations';
 import Notice from "./school/components/notice/Notice";
 import Schedule from "./school/components/schedule/Schedule";
-import Students from "./school/components/students/Students"; // This is the component you need to modify
+import Students from './school/components/students/Students';
+import SchoolManagement from "./school/components/schoolManage/SchoolManagement"; // This is the component you need to modify
 import Subjects from "./school/components/subjects/Subjects";
 import Teachers from "./school/components/teachers/Teachers";
+
 import Client from "./client/Client";
 import Home from "./client/components/home/Home";
 import Login from "./client/components/login/Login";   
 import Register from "./client/components/register/Register";
 import About from "./client/components/about/About";
 import Courses from "./client/components/courses/Courses";
-
 
 import Teacher from "./teacher/Teacher";
 import TeacherDetails from "./teacher/components/teacher details/TeacherDetails";
@@ -31,6 +32,7 @@ import ScheduleStudent from "./student/components/schedule/ScheduleStudent";
 import AttendanceStudent from "./student/components/attendance/AttendanceStudent";
 import NoticeStudent from "./student/components/notice/NoticeStudent";
 import ExaminationsStudent from "./student/components/examinations/ExaminationsStudent";
+
 
 function App() {
 
@@ -47,7 +49,8 @@ function App() {
           <Route path='examinations' element={<Examinations/>}/>
           <Route path='notice' element={<Notice/>}/>
           <Route path='schedule' element={<Schedule/>}/>
-          <Route path='students' element={<Students/>}/> // This route will now show schools
+          <Route path='students' element={<Students/>}/> 
+          <Route path='school' element={<SchoolManagement/>}/>
           <Route path='subjects' element={<Subjects/>}/>
           <Route path='teachers' element={<Teachers/>}/> 
         </Route>
