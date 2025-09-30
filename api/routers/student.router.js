@@ -1,8 +1,16 @@
 const express = require('express');
 const router = express.Router();
-const { getAllStudents } = require('../controllers/student.controller');
-const authMiddleware = require('../auth/auth'); // Assuming you have this middleware
 
-router.get('/all', authMiddleware(['ADMIN']), getAllStudents);
+const { 
+    getAllStudents, 
+    deleteStudent, 
+    updateStudent // Imported the new functions
+} = require('../controllers/student.controller'); 
+
+router.get('/all', getAllStudents);
+
+router.delete('/:id', deleteStudent); // Uses the ID parameter
+
+router.put('/:id', updateStudent); // Uses the ID parameter
 
 module.exports = router;
