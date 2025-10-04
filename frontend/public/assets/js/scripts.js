@@ -37,8 +37,8 @@ $(function () {
 
   var sidebar_dropdown = function () {
     if ($(".main-sidebar").length) {
-      $(".main-sidebar").niceScroll(sidebar_nicescroll_opts);
-      sidebar_nicescroll = $(".main-sidebar").getNiceScroll();
+      // $(".main-sidebar").niceScroll(sidebar_nicescroll_opts);
+      // sidebar_nicescroll = $(".main-sidebar").getNiceScroll();
 
       $(".main-sidebar .sidebar-menu li a.has-dropdown")
         .off("click")
@@ -58,18 +58,18 @@ $(function () {
   sidebar_dropdown();
 
   if ($("#top-5-scroll").length) {
-    $("#top-5-scroll")
-      .css({
-        height: 315
-      })
-      .niceScroll();
+    // $("#top-5-scroll")
+    //   .css({
+    //     height: 315
+    //   })
+    //   .niceScroll();
   }
   if ($("#scroll-new").length) {
-    $("#scroll-new")
-      .css({
-        height: 200
-      })
-      .niceScroll();
+    // $("#scroll-new")
+    //   .css({
+    //     height: 200
+    //   })
+    //   .niceScroll();
   }
 
   $(".main-content").css({
@@ -97,8 +97,8 @@ $(function () {
         overflow: "hidden"
       });
       setTimeout(function () {
-        $(".main-sidebar").niceScroll(sidebar_nicescroll_opts);
-        sidebar_nicescroll = $(".main-sidebar").getNiceScroll();
+        // $(".main-sidebar").niceScroll(sidebar_nicescroll_opts);
+        // sidebar_nicescroll = $(".main-sidebar").getNiceScroll();
       }, 500);
       $(".main-sidebar .sidebar-menu > li > ul .dropdown-title").remove();
       $(".main-sidebar .sidebar-menu > li > a").removeAttr("data-toggle");
@@ -109,8 +109,8 @@ $(function () {
     } else {
       body.addClass("sidebar-mini");
       body.removeClass("sidebar-show");
-      sidebar_nicescroll.remove();
-      sidebar_nicescroll = null;
+      // sidebar_nicescroll.remove();
+      // sidebar_nicescroll = null;
       $(".main-sidebar .sidebar-menu > li").each(function () {
         let me = $(this);
 
@@ -248,8 +248,8 @@ $(function () {
           )
         );
         setTimeout(function () {
-          sidebar_nicescroll = main_sidebar.niceScroll(sidebar_nicescroll_opts);
-          sidebar_nicescroll = main_sidebar.getNiceScroll();
+          // sidebar_nicescroll = main_sidebar.niceScroll(sidebar_nicescroll_opts);
+          // sidebar_nicescroll = main_sidebar.getNiceScroll();
         }, 700);
 
         sidebar_dropdown();
