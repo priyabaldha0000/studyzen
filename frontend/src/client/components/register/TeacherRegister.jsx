@@ -3,20 +3,18 @@ import { useNavigate } from "react-router-dom";
 // import api from "../api/axios";
 // import "../styles.css";
 
-const StudentRegister = () => {
+const TeacherRegister = () => {
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
     name: "",
     email: "",
-    password: "",
-    confirmPassword: "",
-    student_class: "",
+    qualification: "",
     age: "",
     gender: "",
-    guardian: "",
-    guardian_phone: "",
-    student_image: "",
+    teacher_image: "",
+    password: "",
+    confirmPassword: "",
   });
 
   // handle input change
@@ -33,34 +31,35 @@ const StudentRegister = () => {
       return;
     }
 
+    if (Number(formData.age) < 20 || Number(formData.age) > 70) {
+      alert("Age must be between 20 and 70.");
+      return;
+    }
+
     try {
-      // Prepare payload based on schema
       const {
         name,
         email,
-        password,
-        student_class,
+        qualification,
         age,
         gender,
-        guardian,
-        guardian_phone,
-        student_image,
+        teacher_image,
+        password,
       } = formData;
 
       const payload = {
         name,
         email,
-        password,
-        student_class: student_class ? Number(student_class) : undefined,
-        age: age ? Number(age) : undefined,
+        qualification,
+        age: Number(age),
         gender,
-        guardian,
-        guardian_phone,
-        student_image,
+        teacher_image,
+        password,
+        role: "TEACHER", // backend defaults to this, but explicit here for clarity
       };
 
-      await api.post("/auth/register-student", payload); // <-- Make sure your backend route matches this
-      alert("Student registered successfully! Please login.");
+      await api.post("/auth/register-teacher", payload); // Make sure your backend has this route
+      alert("Teacher registered successfully! Please login.");
       navigate("/login");
     } catch (err) {
       const msg = err.response?.data?.message || "Registration failed";
@@ -71,12 +70,11 @@ const StudentRegister = () => {
   return (
     <div className="form-container">
       <div className="form-card">
-        <h2>Student Registration</h2>
+        <h2>Teacher Registration</h2>
         <form onSubmit={handleSubmit} className="form">
-
           {/* Name */}
           <div className="form-group">
-            <label>Full Name</label>
+            <label>Name</label>
             <input
               type="text"
               name="name"
@@ -93,6 +91,58 @@ const StudentRegister = () => {
               type="email"
               name="email"
               value={formData.email}
+              onChange={handleChange}
+              required
+            />
+          </div>
+
+          {/* Qualification */}
+          <div className="form-group">
+            <label>Qualification</label>
+            <input
+              type="text"
+              name="qualification"
+              value={formData.qualification}
+              onChange={handleChange}
+              required
+            />
+          </div>
+
+          {/* Age */}
+          <div className="form-group">
+            <label>Age</label>
+            <input
+              type="number"
+              name="age"
+              value={formData.age}
+              onChange={handleChange}
+              required
+            />
+          </div>
+
+          {/* Gender */}
+          <div className="form-group">
+            <label>Gender</label>
+            <select
+              name="gender"
+              value={formData.gender}
+              onChange={handleChange}
+              required
+            >
+              <option value="">Select</option>
+              <option value="Male">Male</option>
+              <option value="Female">Female</option>
+              <option value="Other">Other</option>
+            </select>
+          </div>
+
+          {/* Teacher Image (URL or file path) */}
+          <div className="form-group">
+            <label>Profile Image (URL)</label>
+            <input
+              type="text"
+              name="teacher_image"
+              value={formData.teacher_image}
               onChange={handleChange}
               required
             />
@@ -122,71 +172,6 @@ const StudentRegister = () => {
             />
           </div>
 
-          {/* Optional Fields */}
-          <div className="form-group">
-            <label>Class</label>
-            <input
-              type="number"
-              name="student_class"
-              value={formData.student_class}
-              onChange={handleChange}
-            />
-          </div>
-
-          <div className="form-group">
-            <label>Age</label>
-            <input
-              type="number"
-              name="age"
-              value={formData.age}
-              onChange={handleChange}
-            />
-          </div>
-
-          <div className="form-group">
-            <label>Gender</label>
-            <select
-              name="gender"
-              value={formData.gender}
-              onChange={handleChange}
-            >
-              <option value="">Select</option>
-              <option value="male">Male</option>
-              <option value="female">Female</option>
-              <option value="other">Other</option>
-            </select>
-          </div>
-
-          <div className="form-group">
-            <label>Guardian Name</label>
-            <input
-              type="text"
-              name="guardian"
-              value={formData.guardian}
-              onChange={handleChange}
-            />
-          </div>
-
-          <div className="form-group">
-            <label>Guardian Phone</label>
-            <input
-              type="text"
-              name="guardian_phone"
-              value={formData.guardian_phone}
-              onChange={handleChange}
-            />
-          </div>
-
-          <div className="form-group">
-            <label>Student Image (URL)</label>
-            <input
-              type="text"
-              name="student_image"
-              value={formData.student_image}
-              onChange={handleChange}
-            />
-          </div>
-
           <button type="submit" className="btn">Register</button>
         </form>
 
@@ -199,8 +184,8 @@ const StudentRegister = () => {
 
         <p className="redirect-text">
           Register as{" "}
-          <span className="link" onClick={() => navigate("/register-teacher")}>
-            Teacher
+          <span className="link" onClick={() => navigate("/register-student")}>
+            Student
           </span>
         </p>
       </div>
@@ -208,4 +193,4 @@ const StudentRegister = () => {
   );
 };
 
-export default StudentRegister;
+export default TeacherRegister;
